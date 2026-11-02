@@ -25,14 +25,13 @@ const sections = ["Wall Cabinets", "Base Cabinets", "Pantry Cabinets", "Accessor
 const GROUP_LABELS: Record<string, string> = {
   "Wall Cabinets:1 Door":            "One-Door Wall Cabinet",
   "Wall Cabinets:2 Door":            "Two-Door Wall Cabinet",
-  "Wall Cabinets:Bridge":            "Bridge Cabinet",
+  "Wall Cabinets:Bridge Cabinets":   "Bridge Cabinet",
   "Base Cabinets:1 Door":            "One-Door Base Cabinet",
   "Base Cabinets:2 Door":            "Two-Door Base Cabinet",
-  "Base Cabinets:Drawer Base":       "3-Drawer Base Cabinet",
+  "Base Cabinets:3 Drawer":          "3-Drawer Base Cabinet",
   "Base Cabinets:Sink Base":         "Sink Base Cabinet",
-  "Base Cabinets:Drawer + Door":     "Drawer & Door Base Cabinet",
   "Base Cabinets:Blind Corner":      "Blind Corner Base Cabinet",
-  "Pantry Cabinets:Pantry":          "Full-Height Pantry Cabinet",
+  "Pantry Cabinets:Utility Pantry — 1 Door": "Full-Height Pantry Cabinet",
   "Accessories:Trash Pull-Out":      "Trash Pull-Out Cabinet",
   "Accessories:Fillers":             "Cabinet Fillers",
   "Accessories:Toe Kick":            "Toe Kick Strip",
@@ -50,14 +49,13 @@ const GROUP_LABELS: Record<string, string> = {
 const GROUP_DESCRIPTIONS: Record<string, string> = {
   "Wall Cabinets:1 Door":            "Single-door upper cabinet, 12\" deep. Great for corners and narrow spaces.",
   "Wall Cabinets:2 Door":            "Two-door upper cabinet, 12\" deep. The standard choice for open runs above countertops.",
-  "Wall Cabinets:Bridge":            "Shallow 18\" tall cabinet, 12\" deep. Fits above windows, range hoods, and appliances.",
+  "Wall Cabinets:Bridge Cabinets":   "Shallow 18\" tall cabinet, 12\" deep. Fits above windows, range hoods, and appliances.",
   "Base Cabinets:1 Door":            "Single-door base with one adjustable shelf. 24\" deep, 34.5\" tall.",
   "Base Cabinets:2 Door":            "Two-door base with one adjustable shelf. 24\" deep, 34.5\" tall.",
-  "Base Cabinets:Drawer Base":       "Three full-extension drawers. 24\" deep, 34.5\" tall. Ideal for pots, utensils, and tools.",
+  "Base Cabinets:3 Drawer":          "Three full-extension drawers. 24\" deep, 34.5\" tall. Ideal for pots, utensils, and tools.",
   "Base Cabinets:Sink Base":         "Open interior — no center shelf — designed for undermount or drop-in sink installation. 24\" deep, 34.5\" tall.",
-  "Base Cabinets:Drawer + Door":     "One full-extension drawer above, one door below. 24\" deep, 34.5\" tall.",
   "Base Cabinets:Blind Corner":      "Corner base cabinet that maximizes awkward corner storage. 24\" deep, 34.5\" tall.",
-  "Pantry Cabinets:Pantry":          "Full-height pantry with multiple adjustable shelves. 24\" deep. Great for bulk storage.",
+  "Pantry Cabinets:Utility Pantry — 1 Door": "Full-height pantry with multiple adjustable shelves. 24\" deep. Great for bulk storage.",
   "Accessories:Trash Pull-Out":      "Base cabinet with an integrated pull-out trash bin system. 24\" deep, 34.5\" tall.",
   "Accessories:Fillers":             "Straight and fluted filler strips to close gaps between cabinets, walls, and appliances.",
   "Accessories:Toe Kick":            "Painted toe kick board, 8' long × 4.5\" tall. Finishes the base of any cabinet run.",
@@ -158,76 +156,102 @@ export default function CabinetsPage() {
                 </Link>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {/* One collapsible row per group (T306): closed by default, opens to its sizes */}
+              <div className="flex flex-col gap-3">
                 {groups.map((group) => {
                   const key = `${section}:${group.group}`;
                   const label = GROUP_LABELS[key] ?? group.group;
                   const description = GROUP_DESCRIPTIONS[key] ?? "";
                   const { widths, heights, fullDims } = getSizeDisplay(group.items);
+                  const count = group.items.length;
+                  const countLabel = `${count} ${widths.length > 0 ? "size" : "option"}${count === 1 ? "" : "s"}`;
 
                   return (
-                    <div key={group.group} className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden flex flex-col">
-                      {/* Group image */}
-                      <div className="relative aspect-[4/3] bg-gray-50">
-                        {group.image ? (
-                          <Image
-                            src={group.image}
-                            alt={label}
-                            fill
-                            className="object-contain p-4"
-                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                          />
-                        ) : (
-                          <div className="h-full flex items-center justify-center text-gray-300 text-sm">
-                            Photo coming soon
-                          </div>
-                        )}
-                      </div>
+                    <details key={group.group} className="group bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+                      <summary className="flex items-center gap-3 px-4 py-3 min-h-[48px] cursor-pointer list-none [&::-webkit-details-marker]:hidden hover:bg-gray-50 group-open:bg-gray-50 group-open:border-b group-open:border-gray-100">
+                        <span className="relative shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-lg bg-gray-50 overflow-hidden">
+                          {group.image ? (
+                            <Image src={group.image} alt="" fill className="object-contain p-1" sizes="56px" />
+                          ) : null}
+                        </span>
+                        <span className="flex-1 min-w-0">
+                          <span className="block font-semibold text-[var(--color-text)] text-sm sm:text-base">{label}</span>
+                          <span className="block text-xs text-[var(--color-muted)]">{countLabel}</span>
+                        </span>
+                        <svg
+                          aria-hidden="true"
+                          viewBox="0 0 20 20"
+                          className="shrink-0 w-5 h-5 text-[var(--color-muted)] transition-transform group-open:rotate-180"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                        >
+                          <path d="M5 8l5 5 5-5" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </summary>
 
-                      {/* Info */}
-                      <div className="p-4 flex flex-col flex-1">
-                        <h3 className="font-semibold text-[var(--color-text)] text-base">{label}</h3>
-                        {description && (
-                          <p className="mt-1 text-xs text-[var(--color-muted)] leading-relaxed">{description}</p>
-                        )}
-
-                        {/* Available sizes */}
-                        <div className="mt-3 flex-1">
-                          {widths.length > 0 && (
-                            <>
-                              <p className="text-xs font-medium text-[var(--color-muted)] mb-1.5">Available widths:</p>
-                              <div className="flex flex-wrap gap-1.5">
-                                {widths.map((w) => (
-                                  <span key={w} className="text-xs bg-gray-100 text-[var(--color-text)] px-2 py-1 rounded font-mono">{w}</span>
-                                ))}
-                              </div>
-                              {heights.length > 1 && (
-                                <p className="mt-1.5 text-xs text-[var(--color-muted)]">
-                                  Heights: {heights.join(", ")}
-                                </p>
-                              )}
-                            </>
-                          )}
-                          {fullDims.length > 0 && (
-                            <>
-                              <p className="text-xs font-medium text-[var(--color-muted)] mb-1.5">Available sizes:</p>
-                              <div className="flex flex-wrap gap-1.5">
-                                {fullDims.map((d, i) => (
-                                  <span key={i} className="text-xs bg-gray-100 text-[var(--color-text)] px-2 py-1 rounded">{d}</span>
-                                ))}
-                              </div>
-                            </>
+                      <div className="flex flex-col sm:flex-row gap-5 p-4 items-start">
+                        {/* Group image */}
+                        <div className="relative w-full max-w-[260px] self-center sm:self-start sm:w-[200px] shrink-0 aspect-[4/3] bg-gray-50 rounded-lg">
+                          {group.image ? (
+                            <Image
+                              src={group.image}
+                              alt={label}
+                              fill
+                              className="object-contain p-3"
+                              sizes="(max-width: 640px) 260px, 200px"
+                            />
+                          ) : (
+                            <div className="h-full flex items-center justify-center text-gray-300 text-sm">
+                              Photo coming soon
+                            </div>
                           )}
                         </div>
 
-                        <Link
-                          href="/project-builder"
-                          className="mt-4 block text-center text-xs font-semibold text-[var(--color-brand-green)] border border-[var(--color-brand-green)] rounded py-2 hover:bg-[var(--color-brand-green)] hover:text-white transition-colors"
-                        >
-                          Select Size & Price →
-                        </Link>
+                        {/* Info */}
+                        <div className="flex-1 min-w-0">
+                          {description && (
+                            <p className="text-xs text-[var(--color-muted)] leading-relaxed">{description}</p>
+                          )}
+
+                          {/* Available sizes */}
+                          <div className={description ? "mt-3" : ""}>
+                            {widths.length > 0 && (
+                              <>
+                                <p className="text-xs font-medium text-[var(--color-muted)] mb-1.5">Available widths:</p>
+                                <div className="flex flex-wrap gap-1.5">
+                                  {widths.map((w) => (
+                                    <span key={w} className="text-xs bg-gray-100 text-[var(--color-text)] px-2 py-1 rounded font-mono">{w}</span>
+                                  ))}
+                                </div>
+                                {heights.length > 1 && (
+                                  <p className="mt-1.5 text-xs text-[var(--color-muted)]">
+                                    Heights: {heights.join(", ")}
+                                  </p>
+                                )}
+                              </>
+                            )}
+                            {fullDims.length > 0 && (
+                              <>
+                                <p className="text-xs font-medium text-[var(--color-muted)] mb-1.5">Available sizes:</p>
+                                <div className="flex flex-wrap gap-1.5">
+                                  {fullDims.map((d, i) => (
+                                    <span key={i} className="text-xs bg-gray-100 text-[var(--color-text)] px-2 py-1 rounded">{d}</span>
+                                  ))}
+                                </div>
+                              </>
+                            )}
+                          </div>
+
+                          <Link
+                            href="/project-builder"
+                            className="mt-4 inline-block text-xs font-semibold text-[var(--color-brand-green)] border border-[var(--color-brand-green)] rounded px-4 py-2 hover:bg-[var(--color-brand-green)] hover:text-white transition-colors"
+                          >
+                            Select Size &amp; Price →
+                          </Link>
+                        </div>
                       </div>
-                    </div>
+                    </details>
                   );
                 })}
               </div>
