@@ -74,9 +74,8 @@ export function hasWidths(items: CabinetItem[]): boolean {
   return /^\d+"W/.test(items[0]?.dimensions ?? "");
 }
 
-/** "15 sizes", "1 size", "4 options": how many sizes a group has, the same on every page. */
+/** "15 sizes", "1 size": how many sizes a group has, the same word on every row and page (Ovidiu, November 2nd). */
 export function sizeCount(items: CabinetItem[]): string {
   const n = items.length;
-  const word = hasWidths(items) ? "size" : "option";
-  return `${n} ${word}${n === 1 ? "" : "s"}`;
+  return `${n} size${n === 1 ? "" : "s"}`;
 }
