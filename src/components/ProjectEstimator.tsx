@@ -40,11 +40,33 @@ export default function ProjectEstimator({ lvpProducts, hardwoodProducts, cabine
   const [openGroups, setOpenGroups] = useState<Set<string>>(
     () => new Set(linkedGroup ? [groupKey(linkedGroup.section, linkedGroup.group)] : []),
   );
+  // Scroll the linked row into view once. Next.js scrolls to the top of the page on its own after a client
+  // navigation, sometimes after this effect has run, so the scroll is repeated over the first second and once
+  // more when the page has loaded, each time only if the row isn't in view yet and the visitor hasn't scrolled.
   const scrolledToLink = useRef(false);
   useEffect(() => {
     if (!linkedGroup || scrolledToLink.current) return;
     scrolledToLink.current = true;
-    document.getElementById(`cabinet-group-${groupSlug(linkedGroup.section, linkedGroup.group)}`)?.scrollIntoView({ block: "start" });
+    const id = `cabinet-group-${groupSlug(linkedGroup.section, linkedGroup.group)}`;
+    let userScrolled = false;
+    const markUser = () => { userScrolled = true; };
+    const inView = () => {
+      const r = document.getElementById(id)?.getBoundingClientRect();
+      return !!r && r.top >= 0 && r.top < window.innerHeight / 2;
+    };
+    const scroll = () => { if (!userScrolled && !inView()) document.getElementById(id)?.scrollIntoView({ block: "start" }); };
+    for (const ev of ["wheel", "touchmove", "keydown"]) window.addEventListener(ev, markUser, { passive: true });
+    scroll();
+    const frame = requestAnimationFrame(scroll);
+    const timers = [100, 300, 600, 1000, 1500].map((ms) => window.setTimeout(scroll, ms));
+    const onLoad = () => window.setTimeout(scroll, 0);
+    if (document.readyState === "complete") onLoad(); else window.addEventListener("load", onLoad, { once: true });
+    return () => {
+      cancelAnimationFrame(frame);
+      timers.forEach((t) => window.clearTimeout(t));
+      window.removeEventListener("load", onLoad);
+      for (const ev of ["wheel", "touchmove", "keydown"]) window.removeEventListener(ev, markUser);
+    };
   }, [linkedGroup]);
 
   function toggleGroup(key: string, open: boolean) {
