@@ -15,6 +15,9 @@ export default function ContactForm() {
   useEffect(() => {
     const estimate = localStorage.getItem("kom_estimate");
     if (estimate) {
+      // One-time pre-fill from browser storage on page load (the estimator's "Request a quote"
+      // hands the cart text over this way). The rule can't tell this apart from a render loop.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setFields((prev) => ({ ...prev, message: estimate, interest: "Multiple / Not sure yet" }));
       localStorage.removeItem("kom_estimate");
     }
