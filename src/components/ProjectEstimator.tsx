@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import type { Product, CabinetGroup } from "@/types/product";
+import { groupKey, groupLabel, groupSlug, sizeCount } from "@/data/cabinet-labels";
 
 interface CartItem {
   sku: string;
@@ -25,8 +26,57 @@ const CABINET_SECTIONS = ["Wall Cabinets", "Base Cabinets", "Pantry Cabinets", "
 
 export default function ProjectEstimator({ lvpProducts, hardwoodProducts, cabinetCatalog, countertopProducts }: Props) {
   const router = useRouter();
+  // Deep link from the catalog (T306): /project-builder?group=<slug> opens that group's section and row.
+  // An unknown or missing group leaves the estimator as it always opened: Cabinets, Wall Cabinets, every row closed.
+  const searchParams = useSearchParams();
+  const linkedGroup = useMemo(() => {
+    const slug = searchParams.get("group");
+    if (!slug) return null;
+    return (cabinetCatalog.cabinetGroups ?? []).find((g) => groupSlug(g.section, g.group) === slug) ?? null;
+  }, [searchParams, cabinetCatalog]);
   const [activeTab, setActiveTab] = useState<"lvp" | "hardwood" | "cabinets" | "countertops">("cabinets");
-  const [activeCabinetSection, setActiveCabinetSection] = useState("Wall Cabinets");
+  const [activeCabinetSection, setActiveCabinetSection] = useState(linkedGroup?.section ?? "Wall Cabinets");
+  // Which cabinet groups are open; kept while the visitor switches sections and comes back.
+  const [openGroups, setOpenGroups] = useState<Set<string>>(
+    () => new Set(linkedGroup ? [groupKey(linkedGroup.section, linkedGroup.group)] : []),
+  );
+  // Scroll the linked row into view once. Next.js scrolls to the top of the page on its own after a client
+  // navigation, sometimes after this effect has run, so the scroll is repeated over the first second and once
+  // more when the page has loaded, each time only if the row isn't in view yet and the visitor hasn't scrolled.
+  const scrolledToLink = useRef(false);
+  useEffect(() => {
+    if (!linkedGroup || scrolledToLink.current) return;
+    scrolledToLink.current = true;
+    const id = `cabinet-group-${groupSlug(linkedGroup.section, linkedGroup.group)}`;
+    let userScrolled = false;
+    const markUser = () => { userScrolled = true; };
+    const inView = () => {
+      const r = document.getElementById(id)?.getBoundingClientRect();
+      return !!r && r.top >= 0 && r.top < window.innerHeight / 2;
+    };
+    const scroll = () => { if (!userScrolled && !inView()) document.getElementById(id)?.scrollIntoView({ block: "start" }); };
+    for (const ev of ["wheel", "touchmove", "keydown"]) window.addEventListener(ev, markUser, { passive: true });
+    scroll();
+    const frame = requestAnimationFrame(scroll);
+    const timers = [100, 300, 600, 1000, 1500].map((ms) => window.setTimeout(scroll, ms));
+    const onLoad = () => window.setTimeout(scroll, 0);
+    if (document.readyState === "complete") onLoad(); else window.addEventListener("load", onLoad, { once: true });
+    return () => {
+      cancelAnimationFrame(frame);
+      timers.forEach((t) => window.clearTimeout(t));
+      window.removeEventListener("load", onLoad);
+      for (const ev of ["wheel", "touchmove", "keydown"]) window.removeEventListener(ev, markUser);
+    };
+  }, [linkedGroup]);
+
+  function toggleGroup(key: string, open: boolean) {
+    setOpenGroups((prev) => {
+      if (prev.has(key) === open) return prev;
+      const next = new Set(prev);
+      if (open) next.add(key); else next.delete(key);
+      return next;
+    });
+  }
   const [cart, setCart] = useState<CartItem[]>([]);
   const [sqftInputs, setSqftInputs] = useState<Record<string, string>>({});
 
@@ -245,18 +295,33 @@ export default function ProjectEstimator({ lvpProducts, hardwoodProducts, cabine
                 ))}
               </div>
 
-              <div className="space-y-4">
-                {cabinetGroups.map((group: CabinetGroup) => (
-                  <div key={group.group} className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
-                    {/* Group header */}
-                    {group.image && (
-                      <div className="relative w-full aspect-[16/7] bg-gray-50">
-                        <Image src={group.image} alt={group.group} fill className="object-contain p-3" sizes="(max-width: 1024px) 100vw, 600px" />
-                      </div>
-                    )}
-                    <div className="flex items-center gap-3 p-3 border-b border-gray-50 bg-gray-50/50">
-                      <p className="font-semibold text-sm text-[var(--color-text)]">{group.group}</p>
-                    </div>
+              <div className="flex flex-col gap-3">
+                {cabinetGroups.map((group: CabinetGroup) => {
+                  const key = groupKey(group.section, group.group);
+                  const label = groupLabel(group.section, group.group);
+                  return (
+                  <details
+                    key={group.group}
+                    id={`cabinet-group-${groupSlug(group.section, group.group)}`}
+                    open={openGroups.has(key)}
+                    onToggle={(e) => toggleGroup(key, e.currentTarget.open)}
+                    className="group bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden scroll-mt-24"
+                  >
+                    {/* One collapsible row per group (T306): thumbnail, the same name as the catalog, size count */}
+                    <summary className="flex items-center gap-3 px-4 py-3 min-h-[48px] cursor-pointer list-none [&::-webkit-details-marker]:hidden hover:bg-gray-50 group-open:bg-gray-50 group-open:border-b group-open:border-gray-100">
+                      <span className="relative shrink-0 w-12 h-12 rounded-lg bg-gray-50 overflow-hidden">
+                        {group.image ? (
+                          <Image src={group.image} alt="" fill className="object-contain p-1" sizes="48px" />
+                        ) : null}
+                      </span>
+                      <span className="flex-1 min-w-0">
+                        <span className="block font-semibold text-sm text-[var(--color-text)]">{label}</span>
+                        <span className="block text-xs text-[var(--color-muted)]">{sizeCount(group.items)}</span>
+                      </span>
+                      <svg aria-hidden="true" viewBox="0 0 20 20" className="shrink-0 w-5 h-5 text-[var(--color-muted)] transition-transform group-open:rotate-180" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M5 8l5 5 5-5" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </summary>
 
                     {/* Items table */}
                     <div className="overflow-x-auto">
@@ -282,7 +347,7 @@ export default function ProjectEstimator({ lvpProducts, hardwoodProducts, cabine
                                     <span className="text-[var(--color-brand-green)] font-semibold">✓ {inCart.quantity}</span>
                                   ) : (
                                     <button
-                                      onClick={() => handleAddCabinet(item, group.image, group.group)}
+                                      onClick={() => handleAddCabinet(item, group.image, label)}
                                       className="w-6 h-6 rounded-full bg-[var(--color-brand-green)] text-white text-sm font-bold hover:bg-[var(--color-brand-dark)] transition-colors flex items-center justify-center"
                                     >
                                       +
@@ -295,8 +360,9 @@ export default function ProjectEstimator({ lvpProducts, hardwoodProducts, cabine
                         </tbody>
                       </table>
                     </div>
-                  </div>
-                ))}
+                  </details>
+                  );
+                })}
               </div>
             </div>
           )}
