@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import ProjectEstimator from "@/components/ProjectEstimator";
 import { KITCHEN_DESIGNER, plannerIsLive } from "@/data/designer";
 import type { Product } from "@/types/product";
@@ -80,12 +81,15 @@ export default function ProjectBuilderPage() {
             Build your estimate from the product list
           </h2>
         </div>
-        <ProjectEstimator
-          lvpProducts={lvp.filter((p) => p.price > 0)}
-          hardwoodProducts={hardwood}
-          cabinetCatalog={cabinets[0]}
-          countertopProducts={countertops}
-        />
+        {/* Suspense: the estimator reads ?group= (useSearchParams) on the client; the page itself stays static. */}
+        <Suspense fallback={null}>
+          <ProjectEstimator
+            lvpProducts={lvp.filter((p) => p.price > 0)}
+            hardwoodProducts={hardwood}
+            cabinetCatalog={cabinets[0]}
+            countertopProducts={countertops}
+          />
+        </Suspense>
       </section>
     </>
   );

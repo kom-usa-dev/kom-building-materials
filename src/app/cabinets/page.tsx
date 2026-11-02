@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import type { Product, CabinetItem } from "@/types/product";
 import cabinetsData from "@/data/cabinets.json";
+import { GROUP_DESCRIPTIONS, groupKey, groupLabel, groupSlug, hasWidths, sizeCount } from "@/data/cabinet-labels";
 
 export const metadata: Metadata = {
   title: "Kitchen Cabinets",
@@ -22,57 +23,8 @@ const features = [
 
 const sections = ["Wall Cabinets", "Base Cabinets", "Pantry Cabinets", "Accessories", "Specialty Cabinets", "Vanity Cabinets"];
 
-const GROUP_LABELS: Record<string, string> = {
-  "Wall Cabinets:1 Door":            "One-Door Wall Cabinet",
-  "Wall Cabinets:2 Door":            "Two-Door Wall Cabinet",
-  "Wall Cabinets:Bridge Cabinets":   "Bridge Cabinet",
-  "Base Cabinets:1 Door":            "One-Door Base Cabinet",
-  "Base Cabinets:2 Door":            "Two-Door Base Cabinet",
-  "Base Cabinets:3 Drawer":          "3-Drawer Base Cabinet",
-  "Base Cabinets:Sink Base":         "Sink Base Cabinet",
-  "Base Cabinets:Blind Corner":      "Blind Corner Base Cabinet",
-  "Pantry Cabinets:Utility Pantry — 1 Door": "Full-Height Pantry Cabinet",
-  "Accessories:Trash Pull-Out":      "Trash Pull-Out Cabinet",
-  "Accessories:Fillers":             "Cabinet Fillers",
-  "Accessories:Toe Kick":            "Toe Kick Strip",
-  "Accessories:Refrigerator Panel":  "Refrigerator Panel",
-  "Accessories:End Panels":          "End Panels",
-  "Specialty Cabinets:Oven Cabinets":        "Oven Tower Cabinet",
-  "Specialty Cabinets:Microwave Cabinet":    "Microwave Wall Cabinet",
-  "Specialty Cabinets:Lazy Susan":           "Corner Lazy Susan",
-  "Specialty Cabinets:Diagonal Sink Base":   "Diagonal Corner Sink Base",
-  "Specialty Cabinets:Wall Blind Corner":    "Wall Blind Corner Cabinet",
-  "Vanity Cabinets:Vanity Base":       "Vanity Base Cabinet",
-  "Vanity Cabinets:Vanity Combination":"Vanity Combination Cabinet",
-};
-
-const GROUP_DESCRIPTIONS: Record<string, string> = {
-  "Wall Cabinets:1 Door":            "Single-door upper cabinet, 12\" deep. Great for corners and narrow spaces.",
-  "Wall Cabinets:2 Door":            "Two-door upper cabinet, 12\" deep. The standard choice for open runs above countertops.",
-  "Wall Cabinets:Bridge Cabinets":   "Shallow 18\" tall cabinet, 12\" deep. Fits above windows, range hoods, and appliances.",
-  "Base Cabinets:1 Door":            "Single-door base with one adjustable shelf. 24\" deep, 34.5\" tall.",
-  "Base Cabinets:2 Door":            "Two-door base with one adjustable shelf. 24\" deep, 34.5\" tall.",
-  "Base Cabinets:3 Drawer":          "Three full-extension drawers. 24\" deep, 34.5\" tall. Ideal for pots, utensils, and tools.",
-  "Base Cabinets:Sink Base":         "Open interior — no center shelf — designed for undermount or drop-in sink installation. 24\" deep, 34.5\" tall.",
-  "Base Cabinets:Blind Corner":      "Corner base cabinet that maximizes awkward corner storage. 24\" deep, 34.5\" tall.",
-  "Pantry Cabinets:Utility Pantry — 1 Door": "Full-height pantry with multiple adjustable shelves. 24\" deep. Great for bulk storage.",
-  "Accessories:Trash Pull-Out":      "Base cabinet with an integrated pull-out trash bin system. 24\" deep, 34.5\" tall.",
-  "Accessories:Fillers":             "Straight and fluted filler strips to close gaps between cabinets, walls, and appliances.",
-  "Accessories:Toe Kick":            "Painted toe kick board, 8' long × 4.5\" tall. Finishes the base of any cabinet run.",
-  "Accessories:Refrigerator Panel":  "Finished decorative panel for built-in refrigerator surround. 24\" deep × 96\" tall.",
-  "Accessories:End Panels":          "Decorative finished panels for exposed cabinet sides — available in wall and base sizes.",
-  "Specialty Cabinets:Oven Cabinets":        "Full-height tower designed for wall oven installation. 24\" deep. Available in 30\" and 33\" widths.",
-  "Specialty Cabinets:Microwave Cabinet":    "Wall cabinet sized specifically for above-counter microwave installation. 30\"W × 18\"H × 18\"D.",
-  "Specialty Cabinets:Lazy Susan":           "Corner base cabinet with rotating shelves for effortless corner access. Cabinet and hardware kit sold separately.",
-  "Specialty Cabinets:Diagonal Sink Base":   "Angled corner base cabinet for diagonal sink placement in island or angled kitchen layouts.",
-  "Specialty Cabinets:Wall Blind Corner":    "Upper corner cabinet spanning both walls to maximize corner storage.",
-  "Vanity Cabinets:Vanity Base":       "Bathroom vanity base, 21\" deep × 34.5\" tall. Sized for standard bathroom sink installation.",
-  "Vanity Cabinets:Vanity Combination":"Full-width bathroom vanity, 21\" deep × 34.5\" tall. Suitable for double-sink configurations.",
-};
-
 function getSizeDisplay(items: CabinetItem[]): { widths: string[]; heights: string[]; fullDims: string[] } {
-  const firstHasStandardW = /^\d+"W/.test(items[0]?.dimensions ?? "");
-  if (firstHasStandardW) {
+  if (hasWidths(items)) {
     const widths = [...new Set(items.map((i) => {
       const m = i.dimensions.match(/^(\d+)"W/);
       return m ? `${m[1]}"` : "";
@@ -159,12 +111,10 @@ export default function CabinetsPage() {
               {/* One collapsible row per group (T306): closed by default, opens to its sizes */}
               <div className="flex flex-col gap-3">
                 {groups.map((group) => {
-                  const key = `${section}:${group.group}`;
-                  const label = GROUP_LABELS[key] ?? group.group;
-                  const description = GROUP_DESCRIPTIONS[key] ?? "";
+                  const label = groupLabel(section, group.group);
+                  const description = GROUP_DESCRIPTIONS[groupKey(section, group.group)] ?? "";
                   const { widths, heights, fullDims } = getSizeDisplay(group.items);
-                  const count = group.items.length;
-                  const countLabel = `${count} ${widths.length > 0 ? "size" : "option"}${count === 1 ? "" : "s"}`;
+                  const countLabel = sizeCount(group.items);
 
                   return (
                     <details key={group.group} className="group bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
@@ -244,7 +194,7 @@ export default function CabinetsPage() {
                           </div>
 
                           <Link
-                            href="/project-builder"
+                            href={`/project-builder?group=${groupSlug(section, group.group)}`}
                             className="mt-4 inline-block text-xs font-semibold text-[var(--color-brand-green)] border border-[var(--color-brand-green)] rounded px-4 py-2 hover:bg-[var(--color-brand-green)] hover:text-white transition-colors"
                           >
                             Select Size &amp; Price →
