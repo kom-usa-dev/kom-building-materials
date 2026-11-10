@@ -41,7 +41,7 @@ export const KITCHEN_DESIGNER = {
    * ⚠️ **Null is a supported state, not a broken one.** The card still renders,
    * in its coming-soon form, and `/kitchen-designer` serves the coming-soon page
    * instead of redirecting. Swapping the value is the whole change: the same
-   * route then issues a 307 and the card flips to its available form.
+   * route then issues a 308 (T320) and the card flips to its available form.
    *
    * ⚠️ **Only ever a URL that has been checked SIGNED OUT.** A private Site
    * returns an OpenAI "Sign in required" page, and sending a customer there is

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { permanentRedirect } from "next/navigation";
 import { KITCHEN_DESIGNER } from "@/data/designer";
 
 export const metadata: Metadata = {
@@ -20,9 +20,14 @@ export const metadata: Metadata = {
  * this site publishes points here, and this file is the single place the real
  * destination is named, so the next move costs one line.
  *
- * ⚠️ **A temporary redirect, never a permanent one.** `redirect()` issues 307.
- * A 301 would be cached by browsers indefinitely and would strand customers on
- * a personal account's URL long after it had been replaced.
+ * ✅ **A permanent redirect (308) since T320, November 10th, 2026.** Until
+ * then this was a 307 on purpose: the planner sat on a ChatGPT Site whose host
+ * could change, and a cached permanent redirect would have stranded customers
+ * on a dead address. It now lives on KOM's own subdomain, designer.kom-usa.com,
+ * so the destination is stable. A 307 told Google this URL is the one to keep,
+ * and Search Console flagged designer.kom-usa.com as a "duplicate without
+ * user-selected canonical"; a 308 says the designer's own address is the real
+ * one. Same change as kom-usa.com/kitchen-designer (kom-usa-platform #132).
  *
  * ✅ **Points at designer.kom-usa.com since 9 Oct** (KOM's Cloudflare, T53),
  * as kom-usa.com/kitchen-designer does. From 11 Sep to 9 Oct it pointed at the
@@ -39,7 +44,7 @@ export const metadata: Metadata = {
  * because the same designer serves both.
  */
 export default function Page() {
-  if (KITCHEN_DESIGNER.url) redirect(KITCHEN_DESIGNER.url);
+  if (KITCHEN_DESIGNER.url) permanentRedirect(KITCHEN_DESIGNER.url);
 
   /*
    * "Not yet" as a real page rather than a 404. People reach this from a link
