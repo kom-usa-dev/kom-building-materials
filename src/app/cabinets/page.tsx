@@ -8,15 +8,15 @@ import { GROUP_DESCRIPTIONS, groupKey, groupLabel, groupSlug, hasWidths, sizeCou
 export const metadata: Metadata = {
   title: "Kitchen Cabinets",
   description:
-    "Mercury White Full Overlay Shaker cabinets — in stock. Wall, base, pantry, and specialty cabinets available in a full range of sizes. Contact us for pricing.",
+    "Mercury White Full Overlay Shaker cabinets, in stock. Wall, base, pantry, and specialty cabinets available in a full range of sizes. Contact us for pricing.",
 };
 
 const cabinets = cabinetsData as Product[];
 const catalog = cabinets[0];
 
 const features = [
-  { heading: "Soft-Close Hinges", body: "6-way adjustable soft-close hinges standard on every door — closes quietly every time." },
-  { heading: "Plywood Box", body: "¾\" plywood construction — not particle board — handles heavy cookware without sagging." },
+  { heading: "Soft-Close Hinges", body: "6-way adjustable soft-close hinges standard on every door. Closes quietly every time." },
+  { heading: "Plywood Box", body: "¾\" plywood construction, not particle board, handles heavy cookware without sagging." },
   { heading: "Solid Wood Frame", body: "Solid wood face frame with HDF center panel doors for a clean, durable finish." },
   { heading: "Full Overlay Shaker", body: "Modern full overlay Shaker style covers the face frame for a sleek, seamless look." },
 ];
@@ -38,7 +38,7 @@ function getSizeDisplay(items: CabinetItem[]): { widths: string[]; heights: stri
   return {
     widths: [],
     heights: [],
-    fullDims: items.map((i) => i.dimensions.split(" — ")[0]),
+    fullDims: items.map((i) => i.dimensions.split(", ")[0]),
   };
 }
 

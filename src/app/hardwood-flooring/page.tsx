@@ -12,14 +12,14 @@ const widths = [
   {
     sku: "HWD-001",
     width: "2 1/4\"",
-    description: "Classic narrow width. Ideal for smaller rooms and traditional aesthetics. Minimal knots — ready to stain to any finish.",
+    description: "Classic narrow width. Ideal for smaller rooms and traditional aesthetics. Minimal knots, ready to stain to any finish.",
     image: "/images/hardwood/widths/2-25.avif",
     best: "Best for: traditional homes, smaller rooms",
   },
   {
     sku: "HWD-002",
     width: "3 1/4\"",
-    description: "The most popular width. Versatile and balanced — works in virtually any room and complements any home style.",
+    description: "The most popular width. Versatile and balanced. Works in virtually any room and complements any home style.",
     image: "/images/hardwood/widths/3-25.avif",
     best: "Best for: most homes, any room",
   },
@@ -47,7 +47,7 @@ const roomPhotos = [
 const whyHardwood = [
   { heading: "Refinishable", body: "Unlike LVP, solid hardwood can be sanded and refinished multiple times. A well-maintained floor can last 100+ years." },
   { heading: "Adds Home Value", body: "Hardwood is one of the few flooring materials that consistently increases resale value." },
-  { heading: "Nail-Down Installation", body: "Mechanically fastened to the subfloor — no floating, no movement, no hollow sound underfoot." },
+  { heading: "Nail-Down Installation", body: "Mechanically fastened to the subfloor: no floating, no movement, no hollow sound underfoot." },
   { heading: "Stain to Any Color", body: "Unfinished Select Grade gives you full control over the final look. Choose any stain color in the showroom." },
 ];
 
@@ -90,8 +90,8 @@ export default function HardwoodFlooringPage() {
         <div className="mx-auto max-w-7xl">
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-8">
             <div>
-              <h2 className="text-xl font-bold text-[var(--color-text)]">Red Oak Select Grade — Unfinished</h2>
-              <p className="mt-1 text-sm text-[var(--color-muted)]">3/4&quot; thick — random lengths — 4 widths available</p>
+              <h2 className="text-xl font-bold text-[var(--color-text)]">Red Oak Select Grade, Unfinished</h2>
+              <p className="mt-1 text-sm text-[var(--color-muted)]">3/4&quot; thick, random lengths, 4 widths available</p>
               <p className="text-xs text-[var(--color-muted)] mt-0.5">All widths are the same price. Choose the width that suits your room.</p>
             </div>
             <div className="text-right shrink-0">
@@ -130,7 +130,7 @@ export default function HardwoodFlooringPage() {
           </div>
 
           <p className="mt-6 text-xs text-[var(--color-muted)]">
-            Unfinished — requires sanding, staining, and sealing after installation. Nail-down installation only.
+            Unfinished: requires sanding, staining, and sealing after installation. Nail-down installation only.
           </p>
         </div>
       </section>

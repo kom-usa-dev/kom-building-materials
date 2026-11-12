@@ -10,9 +10,8 @@ const categories = [
 ];
 
 const valuePillars = [
-  { heading: "Expert Guidance", body: "Real advice from people who work in the showroom. Bring your measurements and photos — we'll help you plan." },
-  { heading: "Veteran-Owned", body: "KOM is a Service-Disabled Veteran-Owned Small Business. We run a tight, honest operation." },
-  { heading: "See It In Person", body: "Touch the samples, compare colors side by side. Visit our Redford Township showroom — no appointment needed." },
+  { heading: "Expert Guidance", body: "Real advice from people who work in the showroom. Bring your measurements and photos. We'll help you plan." },
+  { heading: "See It In Person", body: "Touch the samples, compare colors side by side. Visit our Redford Township showroom, no appointment needed." },
 ];
 
 export default async function HomePage() {
@@ -48,7 +47,7 @@ export default async function HomePage() {
             <span className="text-[var(--color-brand-green)]">Without the Middleman</span>
           </h1>
           <p className="mt-5 text-lg text-white/90 max-w-2xl mx-auto leading-relaxed">
-            Cabinets, countertops, LVP, and hardwood flooring — displayed in our Redford Township showroom.
+            Cabinets, countertops, LVP, and hardwood flooring, displayed in our Redford Township showroom.
             Browse, plan, and request a quote online or in person.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
@@ -98,7 +97,7 @@ export default async function HomePage() {
       <section className="py-16 px-4 bg-white">
         <div className="mx-auto max-w-7xl">
           <h2 className="text-2xl font-bold text-center text-[var(--color-text)] mb-10">Why Customers Choose KOM</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
             {valuePillars.map((pillar) => (
               <div key={pillar.heading}>
                 <h3 className="font-semibold text-[var(--color-brand-dark)] mb-2">{pillar.heading}</h3>
@@ -172,7 +171,7 @@ export default async function HomePage() {
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-2xl font-bold text-[var(--color-text)]">Ready to Plan Your Project?</h2>
           <p className="mt-3 text-[var(--color-muted)] text-base leading-relaxed">
-            Use our Project Builder to combine cabinets, countertops, and flooring in one estimate. See a running total, then request an official quote — no checkout, no pressure.
+            Use our Project Builder to combine cabinets, countertops, and flooring in one estimate. See a running total, then request an official quote. No checkout, no pressure.
           </p>
           <Link href="/project-builder" className="mt-6 inline-block rounded bg-[var(--color-brand-green)] px-7 py-3.5 text-base font-semibold text-white shadow hover:bg-[var(--color-brand-green-dark)] transition-colors">
             Build Your Project

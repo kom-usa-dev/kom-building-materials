@@ -91,7 +91,7 @@ export default function CountertopsPage() {
             ))}
           </div>
           <p className="mt-6 text-sm text-[var(--color-muted)] max-w-xl">
-            Full color and edge profile catalog available in our showroom. Pricing confirmed after measurement — use the Project Estimator for a rough square footage estimate.
+            Full color and edge profile catalog available in our showroom. Pricing confirmed after measurement. Use the Project Estimator for a rough square footage estimate.
           </p>
         </div>
       </section>

@@ -4,13 +4,13 @@
     "category": "cabinets",
     "name": "Mercury White Cabinets",
     "manufacturer": "KOM Building Materials",
-    "description": "Full Overlay Shaker style. Plywood Box construction with Solid Wood Frame and HDF Center Panel doors. 6-Way Adjustable Soft-Close Hinges. Mercury White finish — In Stock.",
+    "description": "Full Overlay Shaker style. Plywood Box construction with Solid Wood Frame and HDF Center Panel doors. 6-Way Adjustable Soft-Close Hinges. Mercury White finish. In stock.",
     "dimensions": "",
     "image": "",
     "price": 0,
     "priceUnit": "per-unit",
     "status": "in-stock",
-    "leadTime": "In stock — available immediately",
+    "leadTime": "In stock, available immediately",
     "notes": "Contact us for pricing on individual units.",
     "featured": true,
     "cabinetGroups": [
@@ -93,11 +93,11 @@
         "image": "/images/cabinets/wall-diagonal-corner.png",
         "items": [
           { "sku": "WDC2430",   "dimensions": "24\"W × 30\"H × 12\"D", "price": 245 },
-          { "sku": "WDC2430MD", "dimensions": "24\"W × 30\"H × 12\"D — Mullion Door", "price": 245 },
+          { "sku": "WDC2430MD", "dimensions": "24\"W × 30\"H × 12\"D, Mullion Door", "price": 245 },
           { "sku": "WDC2436",   "dimensions": "24\"W × 36\"H × 12\"D", "price": 275 },
-          { "sku": "WDC2436MD", "dimensions": "24\"W × 36\"H × 12\"D — Mullion Door", "price": 275 },
+          { "sku": "WDC2436MD", "dimensions": "24\"W × 36\"H × 12\"D, Mullion Door", "price": 275 },
           { "sku": "WDC2442",   "dimensions": "24\"W × 42\"H × 12\"D", "price": 310 },
-          { "sku": "WDC2442MD", "dimensions": "24\"W × 42\"H × 12\"D — Mullion Door", "price": 300 },
+          { "sku": "WDC2442MD", "dimensions": "24\"W × 42\"H × 12\"D, Mullion Door", "price": 300 },
           { "sku": "WDC2736",   "dimensions": "27\"W × 36\"H × 12\"D", "price": 310 }
         ]
       },
@@ -191,7 +191,7 @@
       },
       {
         "section": "Pantry Cabinets",
-        "group": "Utility Pantry — 1 Door",
+        "group": "Utility Pantry, 1 Door",
         "image": "/images/cabinets/pantry-utility.png",
         "items": [
           { "sku": "UP2496", "dimensions": "24\"W × 96\"H × 24\"D", "price": 705 },
@@ -214,15 +214,15 @@
         "group": "Fillers",
         "image": "/images/cabinets/fillers.webp",
         "items": [
-          { "sku": "SF330", "dimensions": "3\"W × 30\"H — Straight Filler", "price": 25 },
-          { "sku": "SF334", "dimensions": "3\"W × 34.5\"H — Straight Filler", "price": 30 },
-          { "sku": "SF336", "dimensions": "3\"W × 36\"H — Straight Filler", "price": 30 },
-          { "sku": "SF342", "dimensions": "3\"W × 42\"H — Straight Filler", "price": 30 },
-          { "sku": "SF634", "dimensions": "6\"W × 34.5\"H — Straight Filler", "price": 50 },
-          { "sku": "FF330", "dimensions": "3\"W × 30\"H — Fluted Filler", "price": 30 },
-          { "sku": "FF334", "dimensions": "3\"W × 34.5\"H — Fluted Filler", "price": 35 },
-          { "sku": "FF336", "dimensions": "3\"W × 36\"H — Fluted Filler", "price": 35 },
-          { "sku": "FF342", "dimensions": "3\"W × 42\"H — Fluted Filler", "price": 40 }
+          { "sku": "SF330", "dimensions": "3\"W × 30\"H, Straight Filler", "price": 25 },
+          { "sku": "SF334", "dimensions": "3\"W × 34.5\"H, Straight Filler", "price": 30 },
+          { "sku": "SF336", "dimensions": "3\"W × 36\"H, Straight Filler", "price": 30 },
+          { "sku": "SF342", "dimensions": "3\"W × 42\"H, Straight Filler", "price": 30 },
+          { "sku": "SF634", "dimensions": "6\"W × 34.5\"H, Straight Filler", "price": 50 },
+          { "sku": "FF330", "dimensions": "3\"W × 30\"H, Fluted Filler", "price": 30 },
+          { "sku": "FF334", "dimensions": "3\"W × 34.5\"H, Fluted Filler", "price": 35 },
+          { "sku": "FF336", "dimensions": "3\"W × 36\"H, Fluted Filler", "price": 35 },
+          { "sku": "FF342", "dimensions": "3\"W × 42\"H, Fluted Filler", "price": 40 }
         ]
       },
       {
@@ -246,10 +246,10 @@
         "group": "End Panels",
         "image": "/images/cabinets/end-panels.webp",
         "items": [
-          { "sku": "WEP1230", "dimensions": "12\"W × 30\"H — Wall End Panel", "price": 75 },
-          { "sku": "WEP1236", "dimensions": "12\"W × 36\"H — Wall End Panel", "price": 85 },
-          { "sku": "WEP1242", "dimensions": "12\"W × 42\"H — Wall End Panel", "price": 95 },
-          { "sku": "BEP2430", "dimensions": "24\"W × 30\"H — Base End Panel", "price": 120 }
+          { "sku": "WEP1230", "dimensions": "12\"W × 30\"H, Wall End Panel", "price": 75 },
+          { "sku": "WEP1236", "dimensions": "12\"W × 36\"H, Wall End Panel", "price": 85 },
+          { "sku": "WEP1242", "dimensions": "12\"W × 42\"H, Wall End Panel", "price": 95 },
+          { "sku": "BEP2430", "dimensions": "24\"W × 30\"H, Base End Panel", "price": 120 }
         ]
       },
       {
@@ -278,10 +278,10 @@
         "group": "Lazy Susan",
         "image": "/images/cabinets/lazy-susan.webp",
         "items": [
-          { "sku": "LS33", "dimensions": "33\" × 33\" × 24\"D — Cabinet", "price": 345 },
-          { "sku": "LS36", "dimensions": "36\" × 36\" × 24\"D — Cabinet", "price": 380 },
-          { "sku": "LS33KIT", "dimensions": "Lazy Susan Kit — fits LS33", "price": 145 },
-          { "sku": "LS36KIT", "dimensions": "Lazy Susan Kit — fits LS36", "price": 140 }
+          { "sku": "LS33", "dimensions": "33\" × 33\" × 24\"D, Cabinet", "price": 345 },
+          { "sku": "LS36", "dimensions": "36\" × 36\" × 24\"D, Cabinet", "price": 380 },
+          { "sku": "LS33KIT", "dimensions": "Lazy Susan Kit, fits LS33", "price": 145 },
+          { "sku": "LS36KIT", "dimensions": "Lazy Susan Kit, fits LS36", "price": 140 }
         ]
       },
       {

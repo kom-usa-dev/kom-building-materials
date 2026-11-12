@@ -126,7 +126,7 @@ export default function ContactForm() {
       </div>
 
       {status === "error" && (
-        <p className="text-sm text-red-600">Something went wrong — please try again or call us directly.</p>
+        <p className="text-sm text-red-600">Something went wrong. Please try again or call us directly.</p>
       )}
 
       <button

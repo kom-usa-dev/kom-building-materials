@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 };
 
 const defaultFaqs = [
-  { question: "Who is the financing through?", answer: "We work with third-party financing partners. Details are available in the showroom — we can walk you through your options and help you apply." },
+  { question: "Who is the financing through?", answer: "We work with third-party financing partners. Details are available in the showroom. We can walk you through your options and help you apply." },
   { question: "What can financing cover?", answer: "Financing can cover cabinets, countertops, and flooring materials. Ask us whether installation costs can also be included." },
   { question: "Is there a minimum project size?", answer: "Minimum amounts vary by financing partner. Bring your project estimate to the showroom and we can discuss what makes sense for your situation." },
   { question: "Will it affect my credit?", answer: "Most financing applications involve a credit check. The specific impact depends on the product and lender. We recommend asking in the showroom so we can explain the options clearly." },

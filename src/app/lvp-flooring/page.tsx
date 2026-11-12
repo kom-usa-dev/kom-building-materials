@@ -7,7 +7,7 @@ import lvpData from "@/data/lvp-flooring.json";
 export const metadata: Metadata = {
   title: "LVP Flooring",
   description:
-    "100% waterproof luxury vinyl plank flooring. Browse 4 collections — New Mountain, NASA, Planet, and Roman. See any color in your room with our free 3D visualizer. In stock at our Redford Township showroom.",
+    "100% waterproof luxury vinyl plank flooring. Browse 4 collections: New Mountain, NASA, Planet, and Roman. See any color in your room with our free 3D visualizer. In stock at our Redford Township showroom.",
 };
 
 const lvp = lvpData as Product[];
@@ -18,7 +18,7 @@ const collections = lvp.filter((p) => p.colors && p.colors.length > 0);
 const whyLvp = [
   { heading: "100% Waterproof", body: "Won't swell, warp, or stain from spills. Safe for kitchens, bathrooms, and basements." },
   { heading: "Floating Install", body: "Click-lock planks go over most existing subfloors. No glue, no nails. DIY-friendly." },
-  { heading: "Pet & Kid Proof", body: "12–30mil wear layers resist scratches, claws, and heavy foot traffic." },
+  { heading: "Pet & Kid Proof", body: "12-30mil wear layers resist scratches, claws, and heavy foot traffic." },
   { heading: "See It First", body: "Click \"View in Room\" on any color to see it in a 3D room visualizer before you buy." },
 ];
 
@@ -32,8 +32,8 @@ export default function LvpFlooringPage() {
           <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">LVP Flooring</h1>
           <p className="mt-4 text-white/80 text-base leading-relaxed max-w-2xl">
             Luxury Vinyl Plank is completely waterproof, looks like real wood, and installs over most
-            existing floors without tearing anything out. We carry 4 collections — New Mountain, NASA,
-            Planet, and Roman — available at our Redford Township showroom.
+            existing floors without tearing anything out. We carry 4 collections (New Mountain, NASA,
+            Planet, and Roman), available at our Redford Township showroom.
           </p>
           <Link
             href="/project-builder"
@@ -105,14 +105,14 @@ export default function LvpFlooringPage() {
 
       {/* Collections */}
       {collections.map((collection) => {
-        // Parse dimension string: "48\" L x 7\" W — 5.2mm total — 20mil wear layer"
-        const dimMatch = collection.dimensions.match(/(\d+)" L x (\d+)" W — ([\d.]+)mm total — (\d+)mil wear/);
+        // Parse dimension string: "48\" L x 7\" W, 5.2mm total, 20mil wear layer"
+        const dimMatch = collection.dimensions.match(/(\d+)" L x (\d+)" W, ([\d.]+)mm total, (\d+)mil wear/);
         const padMatch = collection.notes?.match(/([\d.]+)mm soft acoustic pad/);
         const specs = dimMatch ? [
           { label: "Plank Size",    value: `${dimMatch[1]}" × ${dimMatch[2]}"` },
           { label: "Thickness",     value: `${dimMatch[3]}mm` },
           { label: "Wear Layer",    value: `${dimMatch[4]}mil` },
-          { label: "Per Carton",    value: collection.sqftPerCarton ? `${collection.sqftPerCarton} sqft` : "—" },
+          { label: "Per Carton",    value: collection.sqftPerCarton ? `${collection.sqftPerCarton} sqft` : "n/a" },
           { label: "Underlayment",  value: padMatch ? `${padMatch[1]}mm pre-attached` : "None" },
           { label: "Install",       value: "Click-lock floating" },
         ] : [];
@@ -159,7 +159,7 @@ export default function LvpFlooringPage() {
                     {color.image ? (
                       <Image
                         src={color.image}
-                        alt={`${collection.name} — ${color.name}`}
+                        alt={`${collection.name}, ${color.name}`}
                         fill
                         className="object-cover"
                         sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"

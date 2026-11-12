@@ -17,7 +17,7 @@ export default async function ContactPage() {
           <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">Get in Touch</h1>
           <p className="mt-4 text-white/90 text-base leading-relaxed max-w-2xl">
             Reach us by phone, email, or stop by the showroom. Bring your measurements, photos, and
-            questions — we&apos;ll help you figure out the right products and put together an estimate.
+            questions. We&apos;ll help you figure out the right products and put together an estimate.
           </p>
         </div>
       </section>
