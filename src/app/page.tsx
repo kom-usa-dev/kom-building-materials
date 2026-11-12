@@ -11,7 +11,6 @@ const categories = [
 
 const valuePillars = [
   { heading: "Expert Guidance", body: "Real advice from people who work in the showroom. Bring your measurements and photos — we'll help you plan." },
-  { heading: "Veteran-Owned", body: "KOM is a Service-Disabled Veteran-Owned Small Business. We run a tight, honest operation." },
   { heading: "See It In Person", body: "Touch the samples, compare colors side by side. Visit our Redford Township showroom — no appointment needed." },
 ];
 
@@ -98,7 +97,7 @@ export default async function HomePage() {
       <section className="py-16 px-4 bg-white">
         <div className="mx-auto max-w-7xl">
           <h2 className="text-2xl font-bold text-center text-[var(--color-text)] mb-10">Why Customers Choose KOM</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
             {valuePillars.map((pillar) => (
               <div key={pillar.heading}>
                 <h3 className="font-semibold text-[var(--color-brand-dark)] mb-2">{pillar.heading}</h3>

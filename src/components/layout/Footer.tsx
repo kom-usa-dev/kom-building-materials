@@ -39,9 +39,6 @@ export default async function Footer() {
               An online showroom backed by a physical location in Redford Township.
               Professional guidance, premium products, competitive prices.
             </p>
-            <p className="mt-3 text-xs font-medium text-[var(--color-brand-green)]">
-              Service-Disabled Veteran-Owned Small Business (SDVOSB)
-            </p>
             {hours.length > 0 && (
               <div className="mt-4 text-xs text-white/60 space-y-0.5">
                 {hours.map((h, i) => (

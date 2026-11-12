@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     template: "%s | KOM Building Materials",
   },
   description:
-    "Visit our Redford Township showroom or browse online. Cabinets, countertops, LVP and hardwood flooring — expert guidance, competitive prices, veteran-owned.",
+    "Visit our Redford Township showroom or browse online. Cabinets, countertops, LVP and hardwood flooring — expert guidance, competitive prices.",
   metadataBase: new URL("https://screwthemiddleman.com"),
 };
 

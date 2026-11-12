@@ -1,0 +1,7 @@
+## 2026-11-12 · The veteran-owned claim is removed from the site (KBM-3)
+
+**What changed:** screwthemiddleman.com no longer says KOM Building Materials is veteran-owned, anywhere. Removed: the "Veteran-Owned" box in the homepage's "Why Customers Choose KOM" section (the row is now two boxes, Expert Guidance and See It In Person, instead of three); the footer line "Service-Disabled Veteran-Owned Small Business (SDVOSB)" on every page; the About page's intro sentence (now "KOM Building Materials is based in Redford Township, Michigan. We sell cabinets…") and the "principles we carried in uniform" clause in the Quality & Integrity value; the site-wide page description for search engines ("…competitive prices, veteran-owned." → "…competitive prices."); and the About page's own description ("a Service-Disabled Veteran-Owned showroom" → "a cabinet, countertop and flooring showroom"). Files: `src/app/page.tsx`, `src/components/layout/Footer.tsx`, `src/app/about/page.tsx`, `src/app/layout.tsx`.
+
+**Why:** Michael asked on WhatsApp (November 10th and 11th, 2026) for "the veteran owned" wording to go; Ovidiu: remove it everywhere.
+
+**Not changed:** Sanity holds no veteran wording (the only content document is Site Settings, with no text fields filled; there is no About Us document, so the About page shows the code's own text). `BLUEPRINT.md` still lists the SDVOSB positioning as the site's original brief; it is a planning document, not shown on the site. No structured data (JSON-LD) exists on the site. No test was added: this repo has no test runner yet.

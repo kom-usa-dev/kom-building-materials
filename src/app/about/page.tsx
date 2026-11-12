@@ -5,7 +5,7 @@ import { getAboutPage } from "@/sanity/lib/queries";
 export const metadata: Metadata = {
   title: "About Us",
   description:
-    "KOM Building Materials is a Service-Disabled Veteran-Owned showroom in Redford Township, MI. Professional guidance, premium products, competitive prices.",
+    "KOM Building Materials is a cabinet, countertop and flooring showroom in Redford Township, MI. Professional guidance, premium products, competitive prices.",
 };
 
 const defaultValues = [
@@ -19,7 +19,7 @@ const defaultValues = [
   },
   {
     heading: "Quality & Integrity",
-    body: "We only carry products we'd put in our own homes — from manufacturers with real warranties and real quality control. Founded on the principles we carried in uniform: accountability and taking care of the people in front of us.",
+    body: "We only carry products we'd put in our own homes — from manufacturers with real warranties and real quality control. Founded on accountability and taking care of the people in front of us.",
   },
 ];
 
@@ -27,7 +27,7 @@ export default async function AboutPage() {
   const about = await getAboutPage();
 
   const heading = about?.heading || "Built on Honest Business";
-  const intro = about?.intro || "KOM Building Materials is a Service-Disabled Veteran-Owned Small Business (SDVOSB) based in Redford Township, Michigan. We sell cabinets, countertops, and flooring — and we do it without the layers of markup that drive up prices at big-box stores.";
+  const intro = about?.intro || "KOM Building Materials is based in Redford Township, Michigan. We sell cabinets, countertops, and flooring — and we do it without the layers of markup that drive up prices at big-box stores.";
   const mission = about?.mission || "Most homeowners don't know what materials actually cost. They walk into a big-box store, pay retail, and assume that's the market price. It's not. KOM was built to close that gap.";
   const story = about?.story || "We run a physical showroom in Redford Township so you can see and touch the products before you buy. No guessing from photos. No surprises when the order arrives.";
   const values: { heading: string; body: string }[] = about?.values?.length ? about.values : defaultValues;
