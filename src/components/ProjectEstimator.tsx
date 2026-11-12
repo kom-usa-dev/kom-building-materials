@@ -119,7 +119,7 @@ export default function ProjectEstimator({ lvpProducts, hardwoodProducts, cabine
   function handleAddCabinet(item: { sku: string; dimensions: string; price?: number }, groupImage: string, groupName: string) {
     addToCart({
       sku: item.sku,
-      name: `${groupName} — ${item.dimensions}`,
+      name: `${groupName}, ${item.dimensions}`,
       image: groupImage,
       price: item.price ?? 0,
       priceUnit: "per-unit",
@@ -145,13 +145,13 @@ export default function ProjectEstimator({ lvpProducts, hardwoodProducts, cabine
         const qtyLabel = item.priceUnit === "per-sqft"
           ? `${item.quantity.toLocaleString()} sqft`
           : `qty ${item.quantity}`;
-        lines.push(`  • ${item.name} (${qtyLabel}) — $${subtotal.toLocaleString()}`);
+        lines.push(`  • ${item.name} (${qtyLabel}): $${subtotal.toLocaleString()}`);
       }
       lines.push("");
     }
 
     lines.push(`Estimated total: $${cartTotal.toLocaleString()}`);
-    lines.push("(Rough estimate only — final pricing confirmed by KOM team.)");
+    lines.push("(Rough estimate only. Final pricing confirmed by KOM team.)");
 
     const text = lines.join("\n");
     localStorage.setItem("kom_estimate", text);
@@ -340,7 +340,7 @@ export default function ProjectEstimator({ lvpProducts, hardwoodProducts, cabine
                               <tr key={item.sku} className={`border-b border-gray-50 last:border-0 ${idx % 2 === 0 ? "" : "bg-gray-50/30"}`}>
                                 <td className="px-4 py-2 text-[var(--color-text)]">{item.dimensions}</td>
                                 <td className="px-2 py-2 text-right font-medium text-[var(--color-text)] whitespace-nowrap">
-                                  {item.price ? `$${item.price}` : "—"}
+                                  {item.price ? `$${item.price}` : "n/a"}
                                 </td>
                                 <td className="px-3 py-2 text-right">
                                   {inCart ? (
@@ -482,7 +482,7 @@ export default function ProjectEstimator({ lvpProducts, hardwoodProducts, cabine
                 </span>
               </div>
               <p className="text-xs text-[var(--color-muted)] mb-4">
-                Rough estimate only — prices subject to confirmation with our team.
+                Rough estimate only. Prices subject to confirmation with our team.
               </p>
               <button
                 onClick={handleRequestQuote}
